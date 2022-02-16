@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 void PrintIntroduction(int Difficulty) 
 {
@@ -10,9 +11,9 @@ bool PlayGame(int Difficulty)
 {
   PrintIntroduction(Difficulty);
 
-  const int CodeA = 4;
-  const int CodeB = 3;
-  const int CodeC = 4;
+  const int CodeA = rand() % Difficulty + Difficulty;
+  const int CodeB = rand() % Difficulty + Difficulty;
+  const int CodeC = rand() % Difficulty + Difficulty;
 
   const int CodeSum = CodeA + CodeB + CodeC; 
   const int CodeProduct = CodeA * CodeB * CodeC;
@@ -30,21 +31,24 @@ bool PlayGame(int Difficulty)
 
   if (GuessSum == CodeSum && GuessProduct == CodeProduct) 
   {
-    std::cout << "You win! \n";
+    std::cout << "You guessed correctly, time to move on to the next level! \n";
     return true;
   }
   else 
   {
-    std::cout << "That is incorrect, you lose! \n";
+    std::cout << "That is incorrect, time to try again! \n";
     return false;
   }
 };
 
 int main() 
 {
+  srand(time(NULL));
+  
   int LevelDiffculty = 1;
-
-  while(true)
+  int const MaxLevel = 6;
+ 
+  while(LevelDiffculty <= MaxLevel)
   {
     bool bLevelComplete = PlayGame(LevelDiffculty);
     std::cin.clear(); // Clears any errors
@@ -53,6 +57,9 @@ int main()
     {
       ++LevelDiffculty;
     } 
-  };   
- return 0;
+  };
+
+  std::cout << "You have won! Congratualations!\n";   
+ 
+  return 0;
 };
